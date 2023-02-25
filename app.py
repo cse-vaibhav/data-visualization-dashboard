@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 st.header("Data Visualization App")
 
@@ -28,31 +29,21 @@ if uploaded_file:
 
 if dataframe is not None:
     numerical_cols = list(dataframe.select_dtypes(include=[np.number]).columns.values)
-    fig, ax = plt.subplots(1, 1)
-    ax.boxplot(dataframe[numerical_cols], notch=True, vert=False, labels=numerical_cols)
-    box_plot.pyplot(fig)
+    fig = px.box(dataframe[numerical_cols])
+    box_plot.plotly_chart(fig, theme=None, use_container_width=True)
         
 
 
 if X and Y and dataframe is not None:
 
-    bar_chart_fig, bar_chart_ax = plt.subplots(1, 1)
-    bar_chart_ax.bar(dataframe[X], dataframe[Y])
-    bar_chart_ax.set_xlabel(X)
-    bar_chart_ax.set_ylabel(Y)
-    bar_chart.pyplot(bar_chart_fig)
+    bar_fig = px.bar(dataframe, x=X, y=Y, color=Y)
+    bar_chart.plotly_chart(bar_fig, theme=None, use_container_width=True)
 
-    line_chart_fig, line_chart_ax = plt.subplots(1, 1)
-    line_chart_ax.plot(dataframe[X], dataframe[Y])
-    line_chart_ax.set_xlabel(X)
-    line_chart_ax.set_ylabel(Y)
-    line_chart.pyplot(line_chart_fig)
+    line_fig = px.line(dataframe, x=X, y=Y, color=Y)
+    line_chart.plotly_chart(line_fig, theme=None, use_container_width=True)
 
-    scatter_plot_fig, scatter_plot_ax = plt.subplots(1, 1)
-    scatter_plot_ax.scatter(dataframe[X], dataframe[Y])
-    scatter_plot_ax.set_xlabel(X)
-    scatter_plot_ax.set_ylabel(Y)
-    scatter_plot.pyplot(scatter_plot_fig)
+    scatter_fig = px.scatter(dataframe, x=X, y=Y, color=Y)
+    scatter_plot.plotly_chart(scatter_fig, theme=None, use_container_width=True)
 
 # temp_data_file = DATA_DIR + "tmp.csv"
 
